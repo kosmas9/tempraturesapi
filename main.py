@@ -22,7 +22,14 @@ def read_root():
 @app.get("/locations")
 def list_locations():
     """List all available locations."""
-    query = "SELECT * FROM [dbo].[tempratures]"
+    query = "SELECT top 1 * FROM [dbo].[tempratures]"
     with engine.connect() as conn:
         result = conn.execute(text(query))
-        return {"locations": [row[0] for row in result]}
+        rows = result.fetchall()  # Fetch all rows
+
+    # Convert to DataFrame
+    df = pd.DataFrame(rows, columns=result.keys())  
+
+    # Convert DataFrame to JSON
+    json_data = df.to_json(orient="records", indent=4)
+    return json_data
