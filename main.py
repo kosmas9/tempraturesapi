@@ -1,9 +1,10 @@
 from fastapi import FastAPI, HTTPException, Query
 from sqlalchemy import create_engine, text
 import pandas as pd
+from urllib.parse import quote
 
 username="kd"
-password="Nb!R5EvEW9GzXB@"
+password=quote("Nb!R5EvEW9GzXB@")
 database="meteomatics"
 host="tempraturestestdb.database.windows.net"
 
